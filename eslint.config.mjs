@@ -49,8 +49,7 @@ export default [
     },
   },
   {
-    // Что игнорируем
-    ignores: ["dist", "node_modules", "vite.config.ts"],
+    ignores: ["dist", "node_modules", "vite.config.mts"],
   },
   eslintPrettierConfig, // Должен быть в конце, чтобы отключить конфликтующие правила
 ];
