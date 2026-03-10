@@ -1,5 +1,8 @@
 # Стек: React/TypeScript + Vite, Sass, библиотеки textarea-caret, @floating-ui/react, Eslint/Prettier
 
+# Деплой проекта
+
+
 Нужно реализовать поле textarea, в котором при вводе @ появляется выпадающий список пользователей.
 
 ## Требования к функционалу:
@@ -26,4 +29,4 @@ II. Скачать необходимые пакеты
 
 III. Скрипты запусков
 
-- vite start (запускает проект, http://localhost:3000)
+- npm start (запускает проект, http://localhost:3000)
