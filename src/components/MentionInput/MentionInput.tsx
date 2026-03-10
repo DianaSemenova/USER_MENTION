@@ -1,4 +1,4 @@
-import { getFilteredUsers } from 'src/utils/getFilteredUsers';
+import { getFilteredUsers } from 'src/utils';
 import { useMentionInput } from '../hooks/useMentionInput';
 import styles from './MentionInput.module.scss';
 
@@ -10,6 +10,7 @@ export const MentionInput = () => {
     isOpen,
     query,
     coords,
+    containerRef,
     textareaRef,
     handleInput,
     selectUser,
@@ -19,7 +20,7 @@ export const MentionInput = () => {
   const filteredUsers = getFilteredUsers(query);
 
   return (
-    <div className={styles.blockMention}>
+    <div className={styles.blockMention} ref={containerRef}>
       <textarea
         ref={textareaRef}
         className={styles.textarea}

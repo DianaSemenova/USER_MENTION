@@ -1,14 +1,32 @@
-import { useState, useCallback, useRef } from 'react';
+import { useState, useCallback, useRef, useEffect } from 'react';
 import { TCoords } from 'src/types/types';
+import { getMentionQuery, getUpdatedTextWithMention } from 'src/utils';
 
 export const useMentionInput = () => {
   const [text, setText] = useState<string>('');
   const [isOpen, setIsOpen] = useState<boolean>(false);
   const [query, setQuery] = useState<string>('');
-  const [coords, setCoords] = useState<TCoords>({ top: 0, left: 0 });
+  const [coords, setCoords] = useState<TCoords>({ top: 0, left: 0 }); // не работает
   const [cursorPos, setCursorPos] = useState<number>(0);
 
+  const containerRef = useRef<HTMLDivElement>(null);
   const textareaRef = useRef<HTMLTextAreaElement>(null);
+
+  useEffect(() => {
+    const handleClickOutside = (event: MouseEvent) => {
+      if (
+        containerRef.current &&
+        !containerRef.current.contains(event.target as Node)
+      ) {
+        setIsOpen(false);
+      }
+    };
+
+    if (isOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => document.removeEventListener('mousedown', handleClickOutside);
+  }, [isOpen]);
 
   const handleInput = useCallback(
     (e: React.ChangeEvent<HTMLTextAreaElement>) => {
@@ -18,18 +36,13 @@ export const useMentionInput = () => {
       setText(value);
       setCursorPos(selectionStart);
 
-      const lastAtPos = value.lastIndexOf('@', selectionStart - 1);
+      const { query, isMentioning } = getMentionQuery(value, selectionStart);
 
-      if (
-        lastAtPos !== -1 &&
-        !value.slice(lastAtPos, selectionStart).includes(' ')
-      ) {
-        const currentQuery = value.slice(lastAtPos + 1, selectionStart);
-        setQuery(currentQuery);
+      if (isMentioning) {
+        setQuery(query);
         setIsOpen(true);
 
         const { offsetLeft, offsetTop } = e.target;
-        console.log(' e.target', e.target);
         setCoords({ top: offsetTop + 20, left: offsetLeft + 10 });
       } else {
         setIsOpen(false);
@@ -40,15 +53,19 @@ export const useMentionInput = () => {
 
   const selectUser = useCallback(
     (username: string) => {
-      const beforeAt = text.slice(0, text.lastIndexOf('@', cursorPos - 1));
-      const afterAt = text.slice(cursorPos);
-      const newText = `${beforeAt}@${username} ${afterAt}`;
+      const { atIndex } = getMentionQuery(text, cursorPos);
+
+      const newText = getUpdatedTextWithMention(
+        text,
+        username,
+        atIndex,
+        cursorPos
+      );
 
       setText(newText);
       setIsOpen(false);
 
-      // Возвращаем фокус
-      textareaRef.current?.focus();
+      setTimeout(() => textareaRef.current?.focus(), 0);
     },
     [text, cursorPos]
   );
@@ -58,6 +75,7 @@ export const useMentionInput = () => {
     isOpen,
     query,
     coords,
+    containerRef,
     textareaRef,
     handleInput,
     selectUser,
