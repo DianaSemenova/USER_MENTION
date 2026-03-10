@@ -38,10 +38,13 @@ ul li {
   list-style: none;
 }
 
-html,
+html {
+  scroll-behavior: smooth;
+  font-size: 100%;
+}
+
 body {
   width: 100%;
-  height: 100%;
   line-height: 1;
   font-size: 16px;
   -ms-text-size-adjust: 100%;
@@ -50,10 +53,7 @@ body {
   font-family: 'Roboto', sans-serif;
   color: #000000;
   background: linear-gradient(135deg, #3c6e99, #5679a7cf, #036485);
-  background-repeat: no-repeat;
   background-size: cover;
-  font-weight: 400;
-  font-style: normal;
 }
 
 h1,

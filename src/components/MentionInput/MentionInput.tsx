@@ -1,50 +1,52 @@
-import { getFilteredUsers } from 'src/utils';
-import { useMentionInput } from '../hooks/useMentionInput';
+import { Trash } from 'react-bootstrap-icons';
+import cn from 'classnames';
+import { MentionInputContext, useMentionInput } from '../hooks/useMentionInput';
 import styles from './MentionInput.module.scss';
-
-const PLACEHOLDER = 'Введите текст, используйте @ для упоминания';
+import { MentonDropDown } from '../MentonDropDown/MentonDropDown';
 
 export const MentionInput = () => {
+  const mentionInputValue = useMentionInput();
   const {
     text,
     isOpen,
-    query,
-    coords,
+    filteredUsers,
     containerRef,
     textareaRef,
     handleInput,
-    selectUser,
     setIsOpen,
-  } = useMentionInput();
-
-  const filteredUsers = getFilteredUsers(query);
+    clearInput,
+  } = mentionInputValue;
 
   return (
-    <div className={styles.blockMention} ref={containerRef}>
-      <textarea
-        ref={textareaRef}
-        className={styles.textarea}
-        value={text}
-        onChange={handleInput}
-        onKeyDown={(e) => e.key === 'Escape' && setIsOpen(false)}
-        placeholder={PLACEHOLDER}
-      />
-      {isOpen && Boolean(filteredUsers.length) && (
-        <ul
-          className={styles.dropdown}
-          style={{ top: coords.top, left: coords.left }}
-        >
-          {filteredUsers.map((user) => (
-            <li
-              key={user.id}
-              onClick={() => selectUser(user.username)}
-              className={styles.item}
+    <MentionInputContext.Provider value={mentionInputValue}>
+      <div className={styles.blockMention} ref={containerRef}>
+        <div className={cn(styles.field, text && styles.field_active)}>
+          <textarea
+            ref={textareaRef}
+            className={styles.textarea}
+            value={text}
+            onChange={handleInput}
+            onKeyDown={(e) => {
+              if (e.key === 'Escape') setIsOpen(false);
+            }}
+            placeholder="Введите текст, используйте @ для упоминания"
+            rows={1}
+          />
+
+          {text && (
+            <button
+              type="button"
+              className={styles.clearButton}
+              onClick={clearInput}
+              aria-label="Очистить"
             >
-              <strong>{user.username}</strong> — {user.fullName}
-            </li>
-          ))}
-        </ul>
-      )}
-    </div>
+              <Trash size={18} className={styles.clearIcon} />
+            </button>
+          )}
+        </div>
+
+        {isOpen && Boolean(filteredUsers.length) && <MentonDropDown />}
+      </div>
+    </MentionInputContext.Provider>
   );
 };
