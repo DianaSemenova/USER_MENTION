@@ -1,73 +1,29 @@
-# React + TypeScript + Vite
+# Стек: React/TypeScript + Vite, Sass, библиотеки textarea-caret, @floating-ui/react, Eslint/Prettier
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+Нужно реализовать поле textarea, в котором при вводе @ появляется выпадающий список пользователей.
 
-Currently, two official plugins are available:
+## Требования к функционалу:
+1. При вводе @ + текст сразу показывается список пользователей (фильтр по ФИО / username).
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) (or [oxc](https://oxc.rs) when used in [rolldown-vite](https://vite.dev/guide/rolldown)) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+2. Позиционирование дропдауна, со списком подходящих пользователей, рядом с курсором (не просто снизу инпута)
 
-## React Compiler
+3. После выбора — вставка @username в текущую позицию курсора и продолжение ввода.
 
-The React Compiler is not enabled on this template because of its impact on dev & build performances. To add it, see [this documentation](https://react.dev/learn/react-compiler/installation).
+4. Поддержка нескольких упоминаний в одном тексте.
 
-## Expanding the ESLint configuration
+5. Список должен скрываться при потере фокуса, esc, клик вне элемента
 
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
+## Разворот проекта
 
-```js
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
+I. Склонировать проект
 
-      // Remove tseslint.configs.recommended and replace with this
-      tseslint.configs.recommendedTypeChecked,
-      // Alternatively, use this for stricter rules
-      tseslint.configs.strictTypeChecked,
-      // Optionally, add this for stylistic rules
-      tseslint.configs.stylisticTypeChecked,
+- SSH git@github.com:DianaSemenova/USER_MENTION.git
+- HTTPS https://github.com/DianaSemenova/USER_MENTION.git
 
-      // Other configs...
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+II. Скачать необходимые пакеты
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+- npm install
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
+III. Скрипты запусков
 
-export default defineConfig([
-  globalIgnores(['dist']),
-  {
-    files: ['**/*.{ts,tsx}'],
-    extends: [
-      // Other configs...
-      // Enable lint rules for React
-      reactX.configs['recommended-typescript'],
-      // Enable lint rules for React DOM
-      reactDom.configs.recommended,
-    ],
-    languageOptions: {
-      parserOptions: {
-        project: ['./tsconfig.node.json', './tsconfig.app.json'],
-        tsconfigRootDir: import.meta.dirname,
-      },
-      // other options...
-    },
-  },
-])
-```
+- vite start (запускает проект, http://localhost:3000)
