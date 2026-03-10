@@ -1,18 +1,19 @@
-import eslintJs from "@eslint/js";
-import tseslint from "typescript-eslint";
-import eslintReact from "eslint-plugin-react";
-import eslintReactHooks from "eslint-plugin-react-hooks";
-import eslintPrettier from "eslint-plugin-prettier";
-import eslintPrettierConfig from "eslint-config-prettier";
-import eslintImport from "eslint-plugin-import";
+import eslintJs from '@eslint/js';
+import eslintTs from 'typescript-eslint';
+import eslintReact from 'eslint-plugin-react';
+import eslintReactHooks from 'eslint-plugin-react-hooks';
+import eslintPrettier from 'eslint-plugin-prettier';
+import eslintPrettierConfig from 'eslint-config-prettier';
+import eslintImport from 'eslint-plugin-import';
 
-const tsConfigPath = "./tsconfig.json";
+const tsConfigPath = './tsconfig.json';
 
 export default [
   eslintJs.configs.recommended,
   eslintImport.flatConfigs.recommended,
   eslintImport.flatConfigs.typescript,
-  ...tseslint.configs.recommended,
+  ...eslintTs.configs.recommended,
+  ...eslintTs.configs.stylistic,
   {
     languageOptions: {
       parserOptions: {
@@ -20,12 +21,11 @@ export default [
         ecmaVersion: 2020,
         browser: true,
         node: true,
-        // tsconfigRootDir: import.meta.dirname,
       },
     },
     settings: {
-      react: { version: "detect" },
-      "import/resolver": {
+      react: { version: 'detect' },
+      'import/resolver': {
         typescript: {
           alwaysTryTypes: true,
           tsConfigPath,
@@ -34,22 +34,23 @@ export default [
     },
     plugins: {
       react: eslintReact,
-      "react-hooks": eslintReactHooks,
+      'react-hooks': eslintReactHooks,
       prettier: eslintPrettier,
     },
     rules: {
       ...eslintReactHooks.configs.recommended.rules,
-      "prettier/prettier": ["error"],
-      "@typescript-eslint/no-explicit-any": "off",
-      "no-console": ["warn", { allow: ["warn", "error"] }],
-      "@typescript-eslint/no-unused-vars": [
-        "warn",
-        { argsIgnorePattern: "^_" },
+      '@typescript-eslint/no-explicit-any': 'off',
+      '@typescript-eslint/consistent-type-definitions': 'off',
+      'no-console': ['warn', { allow: ['warn', 'error'] }],
+      '@typescript-eslint/no-unused-vars': [
+        'warn',
+        { argsIgnorePattern: '^_' },
       ],
+      'prettier/prettier': 'error',
     },
   },
   {
-    ignores: ["dist", "node_modules", "vite.config.mts"],
+    ignores: ['dist', 'node_modules', 'vite.config.mts'],
   },
   eslintPrettierConfig, // Должен быть в конце, чтобы отключить конфликтующие правила
 ];
