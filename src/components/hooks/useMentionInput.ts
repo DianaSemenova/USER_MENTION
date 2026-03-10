@@ -6,6 +6,7 @@ import {
   createContext,
   useMemo,
 } from 'react';
+import getCaretCoordinates from 'textarea-caret';
 import { TCoords } from 'src/types/types';
 import {
   getFilteredUsers,
@@ -52,6 +53,7 @@ export const useMentionInput = () => {
   const handleInput = (e: React.ChangeEvent<HTMLTextAreaElement>) => {
     const value = e.target.value;
     const selectionStart = e.target.selectionStart;
+    const target = e.target;
 
     setText(value);
 
@@ -61,12 +63,12 @@ export const useMentionInput = () => {
       setQuery(query);
       setIsOpen(true);
 
-      // Чтобы список не "улетал", фиксируем его относительно контейнера.
-      // Для точного следования за курсором нужны доп. библиотеки,
+      // Получаем координаты относительно начала textarea
+      const caret = getCaretCoordinates(target, selectionStart);
 
       setCoords({
-        top: e.target.offsetTop + e.target.offsetHeight,
-        left: e.target.offsetLeft,
+        top: target.offsetTop + caret.top - target.scrollTop,
+        left: target.offsetLeft + caret.left,
       });
     } else {
       setIsOpen(false);
