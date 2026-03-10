@@ -3,3 +3,5 @@ export type TUser = {
   username: string;
   fullName: string;
 };
+
+export type TCoords = { top: number; left: number };

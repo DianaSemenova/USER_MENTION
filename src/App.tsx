@@ -1,6 +1,6 @@
 import React from 'react';
-// import "./App.css";
+import { MentionInput } from './components/MentionInput';
 
 export const App: React.FunctionComponent = () => {
-  return <div>привет</div>;
+  return <MentionInput />;
 };

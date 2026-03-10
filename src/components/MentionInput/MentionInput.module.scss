@@ -1,0 +1,40 @@
+.blockMention {
+  position: relative;
+  width: 100%;
+  max-width: 500px;
+  margin: 100px auto;
+}
+
+.textarea {
+  width: 100%;
+  height: 100px;
+  padding: 10px;
+  font-family: sans-serif;
+  font-size: 16px;
+  border: 1px solid #ccc;
+  border-radius: 16px;
+  resize: none;
+}
+.dropdown {
+  position: absolute;
+  z-index: 10;
+  background: white;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  max-height: 200px;
+  overflow-y: auto;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.item {
+  padding: 8px 12px;
+  cursor: pointer;
+  font-size: 14px;
+
+  &:hover {
+    background-color: #f0f0f0;
+  }
+}

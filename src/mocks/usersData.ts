@@ -1,6 +1,6 @@
 import { TUser } from 'src/types/types';
 
-export const mockUsers: TUser[] = [
+export const usersData: TUser[] = [
   { id: 1, username: 'ivanov', fullName: 'Иванов Иван Иванович' },
   { id: 2, username: 'petrov', fullName: 'Петров Пётр Петрович' },
   { id: 3, username: 'sidorov', fullName: 'Сидоров Сидор Сидорович' },
