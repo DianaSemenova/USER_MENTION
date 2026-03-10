@@ -1,6 +1,7 @@
 # Стек: React/TypeScript + Vite, Sass, библиотеки textarea-caret, @floating-ui/react, Eslint/Prettier
 
 # Деплой проекта
+https://user-mention-tau.vercel.app/
 
 
 Нужно реализовать поле textarea, в котором при вводе @ появляется выпадающий список пользователей.
