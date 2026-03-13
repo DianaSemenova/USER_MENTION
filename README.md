@@ -1,4 +1,4 @@
-# Стек: React/TypeScript + Vite, Sass, библиотеки textarea-caret, @floating-ui/react, Eslint/Prettier
+# Стек: React/TypeScript + Vite, Eslint/Prettier, Sass, библиотека textarea-caret
 
 # Деплой проекта
 https://user-mention-tau.vercel.app/
